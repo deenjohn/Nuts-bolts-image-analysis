@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Capture Image</title>
+</head>
+<body>
+ <h1>Capture Image of Torque Nuts and Bolts</h1>
+  <video id="video" autoplay></video>
+ <canvas id="canvas" style="display:none;"></canvas>
+ <button id="capture">Capture</button>
+  <script>
+   // Access the camera and display video stream
+   const video = document.getElementById('video');
+   const canvas = document.getElementById('canvas');
+   const captureButton = document.getElementById('capture');
+
+
+   navigator.mediaDevices.getUserMedia({ video: true })
+     .then(stream => {
+       video.srcObject = stream;
+     })
+     .catch(err => {
+       console.error("Error accessing camera: ", err);
+     });
+
+
+   // Capture image and send to server
+   captureButton.addEventListener('click', () => {
+     // Set canvas size to match video dimensions
+     canvas.width = video.videoWidth;
+     canvas.height = video.videoHeight;
+    
+     // Draw video frame on canvas
+     const context = canvas.getContext('2d');
+     context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+     // Convert canvas to a base64 image and send to server
+     const imageData = canvas.toDataURL('image/png');
+
+
+     // Send the captured image to the backend server
+     fetch('http://localhost:3000/upload', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({ image: imageData })
+     })
+     .then(response => response.json())
+     .then(data => {
+       console.log('Success:', data);
+     })
+     .catch((error) => {
+       console.error('Error:', error);
+     });
+   });
+ </script>
+</body>
+</html>
