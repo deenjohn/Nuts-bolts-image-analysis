@@ -57,7 +57,7 @@ async function imageAnalysis(path_bolts) {
             console.log("write image to path ")
             const fileContent = fs.readFileSync(path.join(__dirname, output_img)); //local save
             const params = {
-                Bucket: "myapp-image-test",
+                Bucket: "myawsbucket-camera",
                 Key: `output.png`,
                 Body: fileContent,
                 ContentType: "image/png",
