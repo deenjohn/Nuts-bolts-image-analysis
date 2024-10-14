@@ -25,6 +25,7 @@ const s3 = new S3Client({
     region: process.env.AWS_REGION,
     signatureVersion: 'v4',
 });
+
 export async function getSignedDownloadUrl(params) {
     console.log("params ", params)
     let command = new GetObjectCommand({ Bucket: params.Bucket, Key: params.Key });
@@ -52,7 +53,7 @@ async function imageAnalysis(path_bolts) {
             console.log("bolt positions ", boltPositions)
             // Step 4: Draw overlays on the image for each bolt position
             boltPositions.forEach(({ x, y, color }) => drawCircle(color, image, x, y))
-            image.write(output_img); // Save the modified image
+            await image.write(output_img); // Save the modified image
             console.log("write image to path ")
             const fileContent = fs.readFileSync(path.join(__dirname, output_img)); //local save
             const params = {
