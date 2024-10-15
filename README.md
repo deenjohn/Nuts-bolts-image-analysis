@@ -32,7 +32,7 @@ node server.js
 
 .
 ├── analyseImage.js            # Image analysis logic
-├── index.html                 # Frontend interface for capturing images
+├──  react app               # Frontend interface for capturing images
 ├── server.js                  # Express server for handling image upload and processing
 ├── utils/                     # Utility functions for image processing
 └── .env                       # Environment variables (not in version control)
