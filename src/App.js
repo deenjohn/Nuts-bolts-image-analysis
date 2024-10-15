@@ -22,7 +22,7 @@ const CaptureImageCamera = () => {
   const captureImage = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    
+
     if (video && canvas) {
       // Set canvas size to match video dimensions
       canvas.width = video.videoWidth;
@@ -43,22 +43,22 @@ const CaptureImageCamera = () => {
         },
         body: JSON.stringify({ image: imageData })
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     }
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <h1>Capture Image of Torque Nuts and Bolts</h1>
       <video ref={videoRef} autoPlay></video>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-      <button onClick={captureImage}>Capture</button>
+      <button onClick={captureImage} style={{ marginTop: "20px" ,height:"50px" }}>Capture</button>
     </div>
   );
 };
